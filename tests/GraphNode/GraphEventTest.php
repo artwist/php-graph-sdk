@@ -33,14 +33,22 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class GraphEventTest extends TestCase
 {
+    private $prophet;
+
     /**
      * @var ObjectProphecy|Response
      */
     protected $responseMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
-        $this->responseMock = $this->prophesize(Response::class);
+        $this->prophet = new \Prophecy\Prophet;
+        $this->responseMock = $this->prophet->prophesize(Response::class);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->prophet->checkPredictions();
     }
 
     public function testCoverGetsCastAsGraphCoverPhoto()

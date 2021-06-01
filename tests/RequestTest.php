@@ -43,6 +43,7 @@ class RequestTest extends TestCase
      */
     public function testAMissingAccessTokenWillThrow()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         $app = new Application('123', 'foo_secret');
         $request = new Request($app);
 
@@ -54,6 +55,7 @@ class RequestTest extends TestCase
      */
     public function testAMissingMethodWillThrow()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         $app = new Application('123', 'foo_secret');
         $request = new Request($app);
 
@@ -65,6 +67,7 @@ class RequestTest extends TestCase
      */
     public function testAnInvalidMethodWillThrow()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         $app = new Application('123', 'foo_secret');
         $request = new Request($app, 'foo_token', 'FOO');
 
@@ -113,6 +116,7 @@ class RequestTest extends TestCase
      */
     public function testAccessTokenConflictsWillThrow()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         $app = new Application('123', 'foo_secret');
         new Request($app, 'foo_token', 'POST', '/me', ['access_token' => 'bar_token']);
     }

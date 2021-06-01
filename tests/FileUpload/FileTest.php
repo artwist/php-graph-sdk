@@ -29,7 +29,7 @@ class FileTest extends TestCase
 {
     protected $testFile = '';
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->testFile = __DIR__ . '/../foo.txt';
     }
@@ -55,6 +55,7 @@ class FileTest extends TestCase
      */
     public function testTryingToOpenAFileThatDoesntExistsThrows()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         new File('does_not_exist.file');
     }
 }

@@ -53,7 +53,7 @@ class ResumableUploaderTest extends TestCase
      */
     private $file;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->fbApp = new Application('app_id', 'app_secret');
         $this->graphApi = new FakeGraphApiForResumableUpload();
@@ -83,6 +83,7 @@ class ResumableUploaderTest extends TestCase
      */
     public function testStartWillLetErrorResponsesThrow()
     {
+        $this->expectException(\Facebook\Exception\ResponseException::class);
         $this->graphApi->failOnStart();
         $uploader = new ResumableUploader($this->fbApp, $this->client, 'access_token', 'v2.4');
 

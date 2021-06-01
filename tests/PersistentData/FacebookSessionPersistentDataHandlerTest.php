@@ -32,6 +32,7 @@ class SessionPersistentDataHandlerTest extends TestCase
      */
     public function testInactiveSessionsWillThrow()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         new SessionPersistentDataHandler();
     }
 

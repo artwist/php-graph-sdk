@@ -46,7 +46,7 @@ class SignedRequestTest extends TestCase
         'foo' => 'bar',
     ];
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->app = new Application('123', 'foo_app_secret');
     }
@@ -69,6 +69,7 @@ class SignedRequestTest extends TestCase
      */
     public function testInvalidSignedRequestsWillFailFormattingValidation()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         new SignedRequest($this->app, 'invalid_signed_request');
     }
 
@@ -93,6 +94,7 @@ class SignedRequestTest extends TestCase
      */
     public function testAnImproperlyEncodedSignatureWillThrowAnException()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         new SignedRequest($this->app, 'foo_sig.' . $this->rawPayload);
     }
 
@@ -101,6 +103,7 @@ class SignedRequestTest extends TestCase
      */
     public function testAnImproperlyEncodedPayloadWillThrowAnException()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         new SignedRequest($this->app, $this->rawSignature . '.foo_payload');
     }
 
@@ -109,6 +112,7 @@ class SignedRequestTest extends TestCase
      */
     public function testNonApprovedAlgorithmsWillThrowAnException()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         $signedRequestData = $this->payloadData;
         $signedRequestData['algorithm'] = 'FOO-ALGORITHM';
 

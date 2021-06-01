@@ -40,7 +40,7 @@ class GraphNodeFactoryTest extends TestCase
      */
     protected $request;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $app = new Application('123', 'foo_app_secret');
         $this->request = new Request(
@@ -70,6 +70,7 @@ class GraphNodeFactoryTest extends TestCase
      */
     public function testANonGraphNodeResponseWillThrow()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         $data = '{"data":[{"id":"123","name":"foo"},{"id":"1337","name":"bar"}]}';
         $res = new Response($this->request, $data);
 
@@ -93,6 +94,7 @@ class GraphNodeFactoryTest extends TestCase
      */
     public function testANonGraphEdgeResponseWillThrow()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         $data = '{"id":"123","name":"foo"}';
         $res = new Response($this->request, $data);
 
@@ -116,6 +118,7 @@ class GraphNodeFactoryTest extends TestCase
      */
     public function testInvalidSubClassesWillThrow()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         GraphNodeFactory::validateSubclass('FooSubClass');
     }
 

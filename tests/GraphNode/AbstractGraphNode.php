@@ -29,16 +29,24 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 abstract class AbstractGraphNode extends TestCase
 {
+    private $prophet;
+
     /**
      * @var ObjectProphecy|Response
      */
     protected $responseMock;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
-        $this->responseMock = $this->prophesize(Response::class);
+        $this->prophet = new \Prophecy\Prophet;
+        $this->responseMock = $this->prophet->prophesize(Response::class);
+    }
+
+    protected function tearDown(): void
+    {
+        $this->prophet->checkPredictions();
     }
 
     protected function makeFactoryWithData($data)

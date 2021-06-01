@@ -54,6 +54,7 @@ class Test extends TestCase
      */
     public function testInstantiatingWithoutAppIdThrows()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         // unset value so there is no fallback to test expected Exception
         putenv(Facebook::APP_ID_ENV_NAME.'=');
         $config = [
@@ -68,6 +69,7 @@ class Test extends TestCase
      */
     public function testInstantiatingWithoutAppSecretThrows()
     {
+        $this->expectException(\Facebook\Exception\SDKException::class);
         // unset value so there is no fallback to test expected Exception
         putenv(Facebook::APP_SECRET_ENV_NAME.'=');
         $config = [
@@ -82,6 +84,7 @@ class Test extends TestCase
      */
     public function testInstantiatingWithoutDefaultGraphVersionThrows()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $config = [
             'app_id' => 'foo_id',
             'app_secret' => 'foo_secret',
@@ -94,6 +97,7 @@ class Test extends TestCase
      */
     public function testSettingAnInvalidHttpClientTypeThrows()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $config = array_merge($this->config, [
             'http_client' => 'foo_client',
         ]);
@@ -105,6 +109,7 @@ class Test extends TestCase
      */
     public function testSettingAnInvalidHttpClientClassThrows()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $config = array_merge($this->config, [
             'http_client' => new \stdClass(),
         ]);
@@ -115,6 +120,7 @@ class Test extends TestCase
      */
     public function testSettingAnInvalidPersistentDataHandlerThrows()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $config = array_merge($this->config, [
             'persistent_data_handler' => 'foo_handler',
         ]);
@@ -138,6 +144,7 @@ class Test extends TestCase
      */
     public function testSettingAnInvalidUrlHandlerThrows()
     {
+        $this->expectException(\Error::class);
         $config = array_merge($this->config, [
             'url_detection_handler' => 'foo_handler',
         ]);
@@ -175,6 +182,7 @@ class Test extends TestCase
      */
     public function testSettingAnAccessThatIsNotStringOrAccessTokenThrows()
     {
+        $this->expectException(\InvalidArgumentException::class);
         $config = array_merge($this->config, [
             'default_access_token' => 123,
         ]);
@@ -299,6 +307,7 @@ class Test extends TestCase
      */
     public function testMaxingOutRetriesWillThrow()
     {
+        $this->expectException(\Facebook\Exception\ResponseException::class);
         $client = new FakeGraphApiForResumableUpload();
         $client->failOnTransfer();
 
