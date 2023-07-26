@@ -25,7 +25,7 @@ namespace Facebook;
 use Facebook\Exception\SDKException;
 use Http\Client\HttpClient;
 use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
 
 /**
  * @package Facebook
@@ -191,7 +191,7 @@ class Client
         list($url, $method, $headers, $body) = $this->prepareRequestMessage($request);
 
         $psr7Response = $this->httpClient->sendRequest(
-            MessageFactoryDiscovery::find()->createRequest($method, $url, $headers, $body)
+            Psr17FactoryDiscovery::findRequestFactory()->createRequest($method, $url, $headers, $body)
         );
 
         static::$requestCount++;
